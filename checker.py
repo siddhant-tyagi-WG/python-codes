@@ -7,12 +7,12 @@ class google_websites:
     def __init__(self, val):
         self.val = val
 
-    def url_creator(self):
+    def func(self):
         page = requests.get(self.val)
         soup = BeautifulSoup(page.content, 'html.parser')
         return soup
 
-    def implementation(self, soup):
+    def function3(self,soup):
         num = 100
         k = 1
         my_list = []
@@ -38,18 +38,17 @@ class google_websites:
                 soup = BeautifulSoup(page.content, 'html.parser')
         return my_list
 
-    def printing(self, my_list):
-        cnt = 1
+    def function4(self, my_list):
+        cnt=1
         for itr in my_list:
             print(cnt)
             print(itr)
             cnt = cnt + 1
 
-
 search_query = input("enter what you want to google: ")
 url = f'https://www.google.com/search?q={search_query}'
 my_obj = google_websites(val=url)
-my_obj.url_creator()
-my_obj.implementation(my_obj.url_creator())
-my_obj.printing(my_obj.implementation(my_obj.url_creator()))
+my_obj.func()
+my_obj.function3(my_obj.func())
+my_obj.function4(my_obj.function3(my_obj.func()))
 

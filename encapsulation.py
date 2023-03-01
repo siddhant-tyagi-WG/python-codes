@@ -12,12 +12,5 @@ class Employee:
 emp = Employee("Jessa", 40000)
 emp.show()
 
-
-print(emp.salary)
-
-
-
-
-
-
-
+# access salary from outside of a class
+print(emp.__salary)
