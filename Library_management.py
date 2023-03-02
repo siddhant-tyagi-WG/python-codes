@@ -73,8 +73,8 @@ class admin():
     def change_in_database(self,library,email,key):
         for itr in  library.my_list:
             if(itr.key==key):
-                self.user_data_dict[email]=itr
-                itr.available=False
+                self.user_data_dict[email] = [itr]
+                itr.available = False
                 print('book added')
                 break
 
@@ -91,7 +91,7 @@ class admin():
 
 class user():
 
-    def show_me_the_books(self,library,):
+    def show_me_the_books(self,library):
         for obj in library.my_list:
             if(obj.available==True):
                 print(obj.key, obj.title, obj.author, obj.genre, obj.available)
@@ -117,8 +117,10 @@ class user():
 
 
     def show_my_data(self,admin,email):
+
         for itr in admin.user_data_dict[email]:
             print(itr.key,itr.title)
+
 
 
 
@@ -146,6 +148,7 @@ if __name__=="__main__":
             elif(user_input=='2'):
                 user_obj.filter_functionality(lc)
             elif(user_input=='3'):
+                print(kk[1])
                 user_obj.show_my_data(ad,kk[1])
             elif(user_input=='4'):
                 key_to_add_in_database=int(input('Enter the key number of book to add in database'))
