@@ -65,6 +65,15 @@ class admin():
 
     def __init__(self):
         self.user_data_dict={}
+        self.admin_id='sid@gmail.com'
+        self.admin_password='hascode1.'
+
+    def verify(self,i1,i2):
+        if(i1==self.admin_id and i2==self.admin_password):
+            return True
+        else:
+            return False
+
     def add_to_database(self,library, verification_bool):
         library.my_list.append(book(library.key_val,'birth of theorm','vilani','mathematics'))
         library.key_val=library.key_val+1
@@ -85,8 +94,10 @@ class admin():
 
 
 
-    def details_of_user(self):
-        pass
+    def details_of_particular_user(self,email):
+        for itr in self.user_data_dict[email]:
+            print(itr.key,itr.title,itr.author,itr.genre,itr.available)
+
 
 
 class user():
@@ -136,25 +147,64 @@ if __name__=="__main__":
     print('----------------')
     ad.generate_report_of_all_books(lc)
     print('-----------------------')
-    k=lc.login_signup()
-    kk=k.split()
-    if(kk[0]=='NAC'):
-        print('user portal shown up')
-        user_obj=user()
-        while True:
-            user_input=input('press 1 for seeing the available books : \n press 2 for filter: \n press 3 for show my data \n  press 4 to add book \n press 5 for end portal')
-            if(user_input=='1'):
-                user_obj.show_me_the_books(lc)
-            elif(user_input=='2'):
-                user_obj.filter_functionality(lc)
-            elif(user_input=='3'):
-                #print(kk[1])
-                user_obj.show_my_data(ad,kk[1])
-            elif(user_input=='4'):
-                key_to_add_in_database=int(input('Enter the key number of book to add in database'))
-                ad.change_in_database(lc,kk[1],key_to_add_in_database)
-            elif(user_input=='5'):
-                break
+    print('check complete')
+    print('---------------------------------------------\n\n')
+    print('Welcome to my library')
+    print('please Login/Signup for the account')
+    while 1:
+        admin_person=input('press 1 if you want to log in for admin else press any key')
+        if(admin_person=='1'):
+            input1=input('Enter your email')
+            input2=input('enter your password')
+            check_admin=ad.verify(input1,input2)
+            if(check_admin==True):
+                print('ye kal karna h')#to be done tomorrow
+            else:
+                print('Incorrect Details')
+        else:
+            k = lc.login_signup()
+            kk = k.split()
+            if (kk[0] == 'NAC'):
+                print('user portal shown up')
+                user_obj = user()
+                while True:
+                    user_input = input(
+                        'press 1 for seeing the available books : \n press 2 for filter: \n press 3 for show my data \n  press 4 to add book \n press 5 for end portal')
+                    if (user_input == '1'):
+                        user_obj.show_me_the_books(lc)
+                    elif (user_input == '2'):
+                        user_obj.filter_functionality(lc)
+                    elif (user_input == '3'):
+                        # print(kk[1])
+                        user_obj.show_my_data(ad, kk[1])
+                    elif (user_input == '4'):
+                        key_to_add_in_database = int(input('Enter the key number of book to add in database'))
+                        ad.change_in_database(lc, kk[1], key_to_add_in_database)
+                    elif (user_input == '5'):
+                        break
+            elif (kk[0] == 'v'):
+                print('user portal shown up')
+                user_obj = user()
+                while True:
+                    user_input = input(
+                        'press 1 for seeing the available books : \n press 2 for filter: \n press 3 for show my data \n  press 4 to add book \n press 5 for end portal')
+                    if (user_input == '1'):
+                        user_obj.show_me_the_books(lc)
+                    elif (user_input == '2'):
+                        user_obj.filter_functionality(lc)
+                    elif (user_input == '3'):
+                        # print(kk[1])
+                        user_obj.show_my_data(ad, kk[1])
+                    elif (user_input == '4'):
+                        key_to_add_in_database = int(input('Enter the key number of book to add in database'))
+                        ad.change_in_database(lc, kk[1], key_to_add_in_database)
+                    elif (user_input == '5'):
+                        break
+
+
+
+
+
 
 
 
