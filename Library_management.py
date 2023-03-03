@@ -38,30 +38,25 @@ class library():
         ans=input("press 1 to log in and 2 to sign up")
 
         if(ans=='1'):
-            while (True):
-                input1 = input('Enter your email id')
-                input2 = input('Enter your password')
-                if (input1 in self.user_dict.keys() and self.user_dict[input1] == input2):
-                    return 'v'+' '+input1
-                else:
-                    print("user not found or  you have entered the wrong credentials")
+            input1 = input('Enter your email id')
+            input2 = input('Enter your password')
+            if (input1 in self.user_dict.keys() and self.user_dict[input1] == input2):
+                return 'v' + ' ' + input1
+            else:
+                print("user not found or  you have entered the wrong credentials")
+                return 'NA'
         else:
-            while 1:
-                input1=input('enter your email id')
-                input2=input('enter your password')
-                input3=input('enter the password again')
-                if(input2==input3 and input1.count('@')==1):
-                    print('account created')
-                    self.user_dict[input1]=input2
-                    return 'NAC'+' '+ input1
+            input1 = input('enter your email id')
+            input2 = input('enter your password')
+            input3 = input('enter the password again')
+            if (input2 == input3 and input1.count('@') == 1):
+                print('account created')
+                self.user_dict[input1] = input2
+                return 'NAC' + ' ' + input1
 
-                else:
-                    print('you have entered the wrong email id or password not match')
-                    print('retry')
-
-
-
-
+            else:
+                print('you have entered the wrong email id or password not match')
+                print('retry')
 
 
 class admin():
@@ -89,10 +84,14 @@ class admin():
     def change_in_database(self,library,email,key):
         for itr in  library.my_list:
             if(itr.key==key):
-                self.user_data_dict.setdefault(email, []).append(itr)
-                itr.available = False
-                print('book added')
-                break
+                if(itr.available==False):
+                    print('book not available')
+                    break
+                else:
+                    self.user_data_dict.setdefault(email, []).append(itr)
+                    itr.available = False
+                    print('book added')
+                    break
 
 
     def generate_report_of_all_books(self, library):
@@ -102,7 +101,7 @@ class admin():
 
 
     def details_of_particular_user(self,email):
-        for itr in self.user_data_dict[email]:
+        for itr in self.user_data_dict.get(email, []):
             print(itr.key,itr.title,itr.author,itr.genre,itr.available)
 
 
@@ -135,10 +134,12 @@ class user():
 
 
     def show_my_data(self,admin,email):
-
+        flag = False
         for itr in admin.user_data_dict.get(email, []):
+            flag = True
             print(itr.key,itr.title,itr.author,itr.genre,itr.available)
-
+        if flag==False:
+            print('NO books are issued  for this user')
 
 
 
@@ -149,10 +150,10 @@ if __name__=="__main__":
     lc.print_my_list()
     print('----------------')
     ad=admin()
-    ad.add_to_database(lc)
     lc.print_my_list()
+    user_obj = user()
     print('----------------')
-    ad.generate_report_of_all_books(lc)
+    #ad.generate_report_of_all_books(lc)
     print('-----------------------')
     print('check complete')
     print('---------------------------------------------\n\n')
@@ -177,15 +178,12 @@ if __name__=="__main__":
                         ad.details_of_particular_user(email_input)
                     elif(admin_input=='4'):
                         break
-
-
-
-
-
             else:
                 print('Incorrect Details')
         else:
             k = lc.login_signup()
+            if(k=='NA'):
+                continue
             kk = k.split()
             if (kk[0] == 'NAC'):
                 print('user portal shown up')
@@ -207,7 +205,7 @@ if __name__=="__main__":
                         break
             elif (kk[0] == 'v'):
                 print('user portal shown up')
-                user_obj = user()
+
                 while True:
                     user_input = input(
                         'press 1 for seeing the available books : \n press 2 for filter: \n press 3 for show my data \n  press 4 to add book \n press 5 for end portal')
