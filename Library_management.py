@@ -20,10 +20,13 @@ class library():
         self.key_val=0
         self.user_dict={}
     def check(self):
-        self.my_list.append(book(self.key_val,'Fundamentals of Wavelets','Goswami, Jaideva','signal_processing'))
+        self.my_list.append(book(self.key_val,'fundamentals of wavelets','Goswami and Jaideva','signal_processing'))
         self.key_val=self.key_val+1
         self.my_list.append(book(self.key_val,'Data Smart','Foreman, John','data_science'))
         self.key_val = self.key_val + 1
+        self.my_list.append(book(self.key_val, 'birth of theorm', 'vilani', 'mathematics'))
+        self.key_val = self.key_val + 1
+
 
 
     def print_my_list(self):
@@ -66,7 +69,7 @@ class admin():
     def __init__(self):
         self.user_data_dict={}
         self.admin_id='sid@gmail.com'
-        self.admin_password='hascode1.'
+        self.admin_password='hashcode1.'
 
     def verify(self,i1,i2):
         if(i1==self.admin_id and i2==self.admin_password):
@@ -74,9 +77,13 @@ class admin():
         else:
             return False
 
-    def add_to_database(self,library, verification_bool):
-        library.my_list.append(book(library.key_val,'birth of theorm','vilani','mathematics'))
+    def add_to_database(self,library):
+        title_of_book=input('enter the name of the book')
+        author_of_book=input('enter the author of the book')
+        genre_of_book=input('enter the genre of the book')
+        library.my_list.append(book(library.key_val,title_of_book,author_of_book,genre_of_book))
         library.key_val=library.key_val+1
+
 
 
     def change_in_database(self,library,email,key):
@@ -129,7 +136,7 @@ class user():
 
     def show_my_data(self,admin,email):
 
-        for itr in admin.user_data_dict[email]:
+        for itr in admin.user_data_dict.get(email, []):
             print(itr.key,itr.title,itr.author,itr.genre,itr.available)
 
 
@@ -142,7 +149,7 @@ if __name__=="__main__":
     lc.print_my_list()
     print('----------------')
     ad=admin()
-    ad.add_to_database(lc,True)
+    ad.add_to_database(lc)
     lc.print_my_list()
     print('----------------')
     ad.generate_report_of_all_books(lc)
@@ -158,7 +165,23 @@ if __name__=="__main__":
             input2=input('enter your password')
             check_admin=ad.verify(input1,input2)
             if(check_admin==True):
-                print('ye kal karna h')#to be done tomorrow
+                print('admin login successfully')
+                while 1:
+                    admin_input=input('press 1 for add a book a database \n  press 2 to generate a report of all books \n press 3 to see details of a particular user \n press 4 to log out ')
+                    if(admin_input=='1'):
+                        ad.add_to_database(lc)
+                    elif(admin_input=='2'):
+                        ad.generate_report_of_all_books(lc)
+                    elif(admin_input=='3'):
+                        email_input=input('enter the email of the user that you want the info for :')
+                        ad.details_of_particular_user(email_input)
+                    elif(admin_input=='4'):
+                        break
+
+
+
+
+
             else:
                 print('Incorrect Details')
         else:
