@@ -9,6 +9,7 @@ class book():
         self.author=author
         self.genre=genre
         self.available=True
+        self.count=1
 
 
 
@@ -20,9 +21,9 @@ class library():
         self.key_val=0
         self.user_dict={}
     def check(self):
-        self.my_list.append(book(self.key_val,'fundamentals of wavelets','Goswami and Jaideva','signal_processing'))
+        self.my_list.append(book(self.key_val,'fundamentals of wavelets','goswami','signal_processing'))
         self.key_val=self.key_val+1
-        self.my_list.append(book(self.key_val,'Data Smart','Foreman, John','data_science'))
+        self.my_list.append(book(self.key_val,'data smart','foreman and John','data_science'))
         self.key_val = self.key_val + 1
         self.my_list.append(book(self.key_val, 'birth of theorm', 'vilani', 'mathematics'))
         self.key_val = self.key_val + 1
@@ -65,6 +66,7 @@ class admin():
         self.user_data_dict={}
         self.admin_id='sid@gmail.com'
         self.admin_password='hashcode1.'
+        self.user_list=[]
 
     def verify(self,i1,i2):
         if(i1==self.admin_id and i2==self.admin_password):
@@ -97,6 +99,18 @@ class admin():
     def generate_report_of_all_books(self, library):
         for obj in library.my_list:
             print(obj.key, obj.title, obj.author, obj.genre,obj.available)
+    def generate_report_of_all_users(self):
+        alpha=1
+        for key, value in self.user_data_dict.items():
+            print(f'User no. {alpha}')
+            print(f"email: {key}")
+            print(f"books taken: {value}")
+            alpha=alpha+1
+
+
+
+    def generate_a_complete_report(self,library):
+        pass
 
 
 
@@ -168,7 +182,7 @@ if __name__=="__main__":
             if(check_admin==True):
                 print('admin login successfully')
                 while 1:
-                    admin_input=input('press 1 for add a book a database \n  press 2 to generate a report of all books \n press 3 to see details of a particular user \n press 4 to log out ')
+                    admin_input=input('press 1 for add a book a database \n  press 2 to generate a report of all books \n press 3 to see details of a particular user \n press 4 to generate report of all users \n press 5 to generate  a complete report \n press 6 to log out')
                     if(admin_input=='1'):
                         ad.add_to_database(lc)
                     elif(admin_input=='2'):
@@ -177,6 +191,11 @@ if __name__=="__main__":
                         email_input=input('enter the email of the user that you want the info for :')
                         ad.details_of_particular_user(email_input)
                     elif(admin_input=='4'):
+                        ad.generate_report_of_all_users()
+
+                    elif(admin_input=='5'):
+                        pass
+                    elif(admin_input=='6'):
                         break
             else:
                 print('Incorrect Details')
@@ -221,6 +240,7 @@ if __name__=="__main__":
                         ad.change_in_database(lc, kk[1], key_to_add_in_database)
                     elif (user_input == '5'):
                         break
+
 
 
 
