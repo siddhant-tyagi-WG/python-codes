@@ -3,13 +3,13 @@
 
 class book():
 
-    def __init__(self,key,title,author,genre):
+    def __init__(self,key,title,author,genre,count):
         self.key=key
         self.title=title
         self.author=author
         self.genre=genre
         self.available=True
-        self.count=1
+        self.count=count
 
 
 
@@ -20,19 +20,25 @@ class library():
         self.my_list=[]
         self.key_val=0
         self.user_dict={}
+        self.my_unique_books = set()
     def check(self):
-        self.my_list.append(book(self.key_val,'fundamentals of wavelets','goswami','signal_processing'))
+        self.my_list.append(book(self.key_val,'fundamentals of wavelets','goswami','signal_processing',1))
+        self.my_unique_books.add('fundamentals of wavelets'+'goswami')
         self.key_val=self.key_val+1
-        self.my_list.append(book(self.key_val,'data smart','foreman and John','data_science'))
+
+        self.my_list.append(book(self.key_val,'data smart','foreman','data_science',1))
+        self.my_unique_books.add('data smart'+'foreman')
         self.key_val = self.key_val + 1
-        self.my_list.append(book(self.key_val, 'birth of theorm', 'vilani', 'mathematics'))
+
+        self.my_list.append(book(self.key_val, 'birth of theorm', 'vilani', 'mathematics',1))
+        self.my_unique_books.add('birth of theorm'+'vilani')
         self.key_val = self.key_val + 1
 
 
 
     def print_my_list(self):
         for obj in self.my_list:
-            print(f'key={obj.key} title= {obj.title} genre={obj.genre} author={obj.author}')
+            print(f'key={obj.key} title= {obj.title} genre={obj.genre} author={obj.author} count={obj.count}')
 
 
     def login_signup(self):
@@ -68,43 +74,56 @@ class admin():
         self.admin_password='hashcode1.'
         self.user_list=[]
 
+
     def verify(self,i1,i2):
         if(i1==self.admin_id and i2==self.admin_password):
             return True
         else:
             return False
 
+    #This function is used to add books to the database
     def add_to_database(self,library):
         title_of_book=input('enter the name of the book')
         author_of_book=input('enter the author of the book')
         genre_of_book=input('enter the genre of the book')
-        library.my_list.append(book(library.key_val,title_of_book,author_of_book,genre_of_book))
-        library.key_val=library.key_val+1
+        s=title_of_book+author_of_book
+        if s not in library.my_unique_books:
+            library.my_list.append(book(library.key_val,title_of_book,author_of_book,genre_of_book,1))
+            library.my_unique_books.add(s)
+            library.key_val=library.key_val+1
+        else:
+            for itr in library.my_list:
+                if(itr.title==title_of_book and author_of_book==itr.author):
+                    itr.count=itr.count+1
+                    break
+        print('book added succesfully')
 
 
 
     def change_in_database(self,library,email,key):
         for itr in  library.my_list:
             if(itr.key==key):
-                if(itr.available==False):
+                if(itr.count==0):
                     print('book not available')
                     break
                 else:
                     self.user_data_dict.setdefault(email, []).append(itr)
-                    itr.available = False
+                    itr.count=itr.count-1
                     print('book added')
                     break
 
 
     def generate_report_of_all_books(self, library):
         for obj in library.my_list:
-            print(obj.key, obj.title, obj.author, obj.genre,obj.available)
+            print(f'key={obj.key} title= {obj.title} genre={obj.genre} author={obj.author} count={obj.count}')
     def generate_report_of_all_users(self):
         alpha=1
-        for key, value in self.user_data_dict.items():
+        for key in self.user_data_dict:
             print(f'User no. {alpha}')
             print(f"email: {key}")
-            print(f"books taken: {value}")
+            for itr in self.user_data_dict[key]:
+                print(f"books taken: key={itr.key} title={itr.title} author={itr.author} genre={itr.genre}")
+            print('----------------------------')
             alpha=alpha+1
 
 
