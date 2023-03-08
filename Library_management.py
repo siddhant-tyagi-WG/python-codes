@@ -8,7 +8,6 @@ class book():
         self.title=title
         self.author=author
         self.genre=genre
-        self.available=True
         self.count=count
 
 
@@ -64,6 +63,7 @@ class library():
             else:
                 print('you have entered the wrong email id or password not match')
                 print('retry')
+                return 'fk'
 
 
 class admin():
@@ -126,16 +126,14 @@ class admin():
             print('----------------------------')
             alpha=alpha+1
 
-
-
-    def generate_a_complete_report(self,library):
-        pass
-
-
-
     def details_of_particular_user(self,email):
+        kp=False
         for itr in self.user_data_dict.get(email, []):
-            print(itr.key,itr.title,itr.author,itr.genre,itr.available)
+            print(f"books taken: key={itr.key} title={itr.title} author={itr.author} genre={itr.genre}")
+            kp=True
+        if(kp==False):
+            print('No data is available for this email id')
+
 
 
 
@@ -143,34 +141,47 @@ class user():
 
     def show_me_the_books(self,library):
         for obj in library.my_list:
-            if(obj.available==True):
-                print(obj.key, obj.title, obj.author, obj.genre, obj.available)
+            if(obj.count>0):
+                print(f'key={obj.key} title= {obj.title} genre={obj.genre} author={obj.author} count={obj.count}')
 
     def filter_functionality(self,library):
-        print(library.my_list)
+
         filter_input=input('Enter the basis on which you want the filter \n press 1 for title \n press 2 for author \n press 3 for genre')
         if(filter_input=='1'):
             title_filter_input=input('enter the title you want to filter for')
+            kp=False
             for obj in library.my_list:
-                if (obj.available == True and obj.title==title_filter_input):
-                    print(obj.key, obj.title, obj.author, obj.genre, obj.available)
+                if (obj.count>0 and obj.title==title_filter_input):
+                    print(f'key={obj.key} title= {obj.title} genre={obj.genre} author={obj.author} count={obj.count}')
+                    kp=True
+            if (kp == False):
+                library.print_my_list()
+
         elif (filter_input == '2'):
             author_filter_input = input('enter the author you want to filter for')
+            kp=False
             for obj in library.my_list:
-                if (obj.available == True and obj.author == author_filter_input):
-                    print(obj.key, obj.title, obj.author, obj.genre, obj.available)
+                if (obj.count>0 and obj.author == author_filter_input):
+                    print(f'key={obj.key} title= {obj.title} genre={obj.genre} author={obj.author} count={obj.count}')
+                    kp=True
+            if (kp == False):
+                library.print_my_list()
         elif(filter_input=='3'):
             genre_filter_input=input('enter the genre you want to filter for')
+            kp=False
             for obj in library.my_list:
-                if (obj.available == True and obj.genre == genre_filter_input):
-                    print(obj.key, obj.title, obj.author, obj.genre, obj.available)
+                if (obj.count>0 and obj.genre == genre_filter_input):
+                    print(f'key={obj.key} title= {obj.title} genre={obj.genre} author={obj.author} count={obj.count}')
+                    kp=True
+            if (kp == False):
+                library.print_my_list()
 
 
     def show_my_data(self,admin,email):
         flag = False
-        for itr in admin.user_data_dict.get(email, []):
+        for obj in admin.user_data_dict.get(email, []):
             flag = True
-            print(itr.key,itr.title,itr.author,itr.genre,itr.available)
+            print(f'key={obj.key} title= {obj.title} genre={obj.genre} author={obj.author} count={obj.count}')
         if flag==False:
             print('NO books are issued  for this user')
 
@@ -219,8 +230,9 @@ if __name__=="__main__":
             else:
                 print('Incorrect Details')
         else:
+
             k = lc.login_signup()
-            if(k=='NA'):
+            if(k=='NA' or k=='fk'):
                 continue
             kk = k.split()
             if (kk[0] == 'NAC'):
