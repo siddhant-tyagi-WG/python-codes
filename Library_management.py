@@ -1,6 +1,7 @@
 
 
 
+
 class book():
 
     def __init__(self,key,title,author,genre,count):
@@ -73,6 +74,8 @@ class admin():
         self.admin_id='sid@gmail.com'
         self.admin_password='hashcode1.'
         self.user_list=[]
+        self.day=1
+        self.book_issue_dict={}
 
 
     def verify(self,i1,i2):
@@ -134,6 +137,17 @@ class admin():
         if(kp==False):
             print('No data is available for this email id')
 
+    def book_issue_reissue_status(self,title_of_the_book):
+
+        self.book_issue_dict.setdefault(title_of_the_book, []).append(self.day)
+        #this has to be modified as per time stamps
+        self.day=self.day+1
+
+    def check_status_of_the_book(self,give_me_the_title):
+        for itr in self.book_issue_dict[give_me_the_title]:
+            print(f'book issued on {itr}')
+
+
 
 
 
@@ -188,6 +202,8 @@ class user():
 
 
 
+
+
 if __name__=="__main__":
     lc=library()
     lc.check()
@@ -212,7 +228,7 @@ if __name__=="__main__":
             if(check_admin==True):
                 print('admin login successfully')
                 while 1:
-                    admin_input=input('press 1 for add a book a database \n  press 2 to generate a report of all books \n press 3 to see details of a particular user \n press 4 to generate report of all users \n press 5 to generate  a complete report \n press 6 to log out')
+                    admin_input=input('press 1 for add a book a database \n  press 2 to generate a report of all books \n press 3 to see details of a particular user \n press 4 to generate report of all users \n press 5 to see the status of the book \n press 6 to log out')
                     if(admin_input=='1'):
                         ad.add_to_database(lc)
                     elif(admin_input=='2'):
@@ -224,7 +240,8 @@ if __name__=="__main__":
                         ad.generate_report_of_all_users()
 
                     elif(admin_input=='5'):
-                        pass
+                        book_title=input('enter the book name that you want the details of :')
+                        ad.check_status_of_the_book(book_title)
                     elif(admin_input=='6'):
                         break
             else:
@@ -250,7 +267,9 @@ if __name__=="__main__":
                         user_obj.show_my_data(ad, kk[1])
                     elif (user_input == '4'):
                         key_to_add_in_database = int(input('Enter the key number of book to add in database'))
+                        title_of_the_book=input('Enter the title of the book')
                         ad.change_in_database(lc, kk[1], key_to_add_in_database)
+                        ad.book_issue_reissue_status(title_of_the_book)
                     elif (user_input == '5'):
                         break
             elif (kk[0] == 'v'):

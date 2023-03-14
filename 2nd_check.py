@@ -1,12 +1,12 @@
-x=34.908765454
-x=round(x,2)
-print(x)
-print('----------------')
-my_dict = {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]}
+def my_decorator(func):
+    def wrapper():
+        print("Before the function is called.")
+        func()
+        print("After the function is called.")
+    return wrapper
 
-for key, value in my_dict.items():
-    print(f"Key: {key}")
-    print(value[0])
+@my_decorator
+def my_function():
+    print("Hello, world!")
 
-
-
+my_function()
