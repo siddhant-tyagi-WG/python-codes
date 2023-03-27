@@ -1,5 +1,6 @@
 
 "python uses the MRO (Method resolution order) to protect the Diamond problem"
+"great example"
 
 class A:
     def do_thing(self):
