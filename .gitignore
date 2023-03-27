@@ -1,0 +1,12 @@
+.venv
+.idea/.name
+.idea/vcs.xml
+Library_Management_project/data/
+__pycache__/my_math.cpython-311.pyc
+__pycache__/my_module.cpython-311.pyc
+__pycache__/pytest_check.cpython-311-pytest-7.2.2.pyc
+__pycache__/pytest_print_example.cpython-311-pytest-7.2.2.pyc
+__pycache__/test_double.cpython-311-pytest-7.2.2.pyc
+
+
+
