@@ -1,9 +1,9 @@
 
 
 
-from admin import admin
+from Library_Management_project.src.admin import admin
 from user import User
-from library import Library
+from Library_Management_project.src.library import Library
 
 if __name__=="__main__":
     lc=Library()

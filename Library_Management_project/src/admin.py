@@ -9,8 +9,6 @@ class admin():
 
     def __init__(self):
         self.user_data_dict={}
-        self.admin_id='sid@gmail.com'
-        self.admin_password='hashcode1.'
         self.user_list=[]
         self.day=1
         self.book_issue_dict={}
@@ -23,7 +21,7 @@ class admin():
         :param i2:admin password
         :return: admin is authenticated or not
         """
-        file = open("my_file.json", "r")
+        file = open("../data/admin_data.json", "r")
         x = file.read()
         final_data = json.loads(x)
         for itr in final_data['admin_list']:
@@ -40,7 +38,7 @@ class admin():
 
         data={"admin_id":input_mailid, "admin_password":input_password}
 
-        with open('my_file.json', 'r+') as file:
+        with open('../data/admin_data.json', 'r+') as file:
             # First we load existing data into a dict.
             file_data = json.load(file)
             # Join new_data with file_data inside emp_details
